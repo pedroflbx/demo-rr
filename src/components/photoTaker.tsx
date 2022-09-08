@@ -1,40 +1,41 @@
-import { Box, Button, IconButton, Stack } from '@mui/material'
-import React, { useState } from 'react'
-import { Camera, FACING_MODES } from 'react-html5-camera-photo'
-import 'react-html5-camera-photo/build/css/index.css'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { useHistory } from 'react-router-dom'
+import { Box, Button, IconButton, Stack } from "@mui/material";
+import React, { useState } from "react";
+import { Camera, FACING_MODES } from "react-html5-camera-photo";
+import "react-html5-camera-photo/build/css/index.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useHistory } from "react-router-dom";
 
 export default function PhotoTaker() {
-  const [dataURI, setDataURI] = useState('')
-  const history = useHistory()
+  const [dataURI, setDataURI] = useState("");
+  const history = useHistory();
 
   return (
     <Box
-      className='App'
+      className="App"
       sx={{
-        '.react-html5-camera-photo>img, .react-html5-camera-photo>video': {
-          width: '375px',
+        ".react-html5-camera-photo>img, .react-html5-camera-photo>video": {
+          width: "375px",
         },
       }}
     >
-      {dataURI !== '' ? (
-        <Box position='relative'>
-          <img src={dataURI} alt='' />
+      {dataURI !== "" ? (
+        <Box position="relative">
+          <img src={dataURI} alt="" />
           <Stack
-            direction='row'
-            position='absolute'
+            direction="row"
+            position="absolute"
             sx={{ bottom: 32 }}
             spacing={2}
-            justifyContent='space-between'
-            width='100%'
+            justifyContent="space-between"
+            width="100%"
           >
-            <IconButton onClick={() => setDataURI('')}>
-              <ArrowBackIcon sx={{ color: 'white' }} />
+            <IconButton onClick={() => setDataURI("")}>
+              <ArrowBackIcon sx={{ color: "white" }} />
             </IconButton>
             <Button
-              onClick={() => history.push('/submitted')}
-              variant='contained'
+              color="secondary"
+              onClick={() => history.push("/submitted")}
+              variant="contained"
             >
               Submit
             </Button>
@@ -53,10 +54,10 @@ export default function PhotoTaker() {
           }}
           sizeFactor={1}
           onTakePhoto={(dataURI: React.SetStateAction<string>) => {
-            setDataURI(dataURI)
+            setDataURI(dataURI);
           }}
         />
       )}
     </Box>
-  )
+  );
 }

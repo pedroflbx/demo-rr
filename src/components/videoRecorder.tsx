@@ -7,40 +7,40 @@ import {
   Stack,
   TextField,
   Typography,
-} from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
-import { ReactMediaRecorder } from 'react-media-recorder'
+} from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { ReactMediaRecorder } from "react-media-recorder";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
   useHistory,
-} from 'react-router-dom'
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
-import StopIcon from '@mui/icons-material/Stop'
-import PhotoTaker from './photoTaker'
-import ImageIcon from '@mui/icons-material/Image'
-import ThankYouPage from './ThankYouPage'
-import ThumbUpIcon from '@mui/icons-material/ThumbUp'
-import Dialog from '@mui/material/Dialog'
+} from "react-router-dom";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import StopIcon from "@mui/icons-material/Stop";
+import PhotoTaker from "./photoTaker";
+import ImageIcon from "@mui/icons-material/Image";
+import ThankYouPage from "./ThankYouPage";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import Dialog from "@mui/material/Dialog";
 
 const VideoPreview = ({ stream }: any) => {
-  const videoRef = useRef<any>(null)
+  const videoRef = useRef<any>(null);
 
   useEffect(() => {
     if (videoRef.current && stream) {
-      videoRef.current.srcObject = stream
+      videoRef.current.srcObject = stream;
     }
-  }, [stream])
+  }, [stream]);
   if (!stream) {
-    return null
+    return null;
   }
-  return <video ref={videoRef} width={365} height={700} autoPlay />
-}
+  return <video ref={videoRef} width={365} height={700} autoPlay />;
+};
 
 const FromMediaRecorder = () => {
-  const history = useHistory()
+  const history = useHistory();
   return (
     <ReactMediaRecorder
       video={{
@@ -58,39 +58,39 @@ const FromMediaRecorder = () => {
         return (
           <div
             style={{
-              border: '1px solid black',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              position: 'relative',
-              height: '100%',
-              width: '100%',
+              border: "1px solid black",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              position: "relative",
+              height: "100%",
+              width: "100%",
             }}
           >
             <Box
               sx={{
-                position: 'absolute',
-                bottom: '64px',
-                textAlign: 'center',
+                position: "absolute",
+                bottom: "64px",
+                textAlign: "center",
                 zIndex: 200,
               }}
             >
-              {status === 'idle' || status === 'stopped' ? (
+              {status === "idle" || status === "stopped" ? (
                 <IconButton onClick={startRecording}>
                   <FiberManualRecordIcon
-                    sx={{ color: 'red' }}
-                    fontSize='large'
+                    sx={{ color: "red" }}
+                    fontSize="large"
                   />
                 </IconButton>
               ) : (
                 <IconButton onClick={stopRecording}>
-                  <StopIcon sx={{ color: 'red' }} fontSize='large' />
+                  <StopIcon sx={{ color: "red" }} fontSize="large" />
                 </IconButton>
               )}
             </Box>
 
-            {status !== 'stopped' ? (
+            {status !== "stopped" ? (
               <VideoPreview stream={previewStream} />
             ) : (
               <video
@@ -102,123 +102,124 @@ const FromMediaRecorder = () => {
                 controls
               />
             )}
-            {status === 'stopped' && (
+            {status === "stopped" && (
               <Button
-                variant='contained'
+                variant="contained"
+                color="secondary"
                 sx={{
                   zIndex: 100000,
-                  position: 'absolute',
+                  position: "absolute",
                   bottom: 32,
                 }}
-                onClick={() => history.push('/submitted')}
+                onClick={() => history.push("/submitted")}
               >
                 Submit
               </Button>
             )}
           </div>
-        )
+        );
       }}
     />
-  )
-}
+  );
+};
 
-type Mode = 'video' | 'image'
+type Mode = "video" | "image";
 
 const VideoRecordPage = (props: { history: any[] }) => {
-  const [mode, setMode] = useState<Mode>('video')
-  const [value, setValue] = useState(2)
-  const [displayRating, setDisplayRating] = useState(false)
-  const [displaySticker, setDisplaySticker] = useState(false)
-  const [isDialogOpen, setDialogOpen] = useState(false)
-  const [text, setText] = useState('')
+  const [mode, setMode] = useState<Mode>("video");
+  const [value, setValue] = useState(2);
+  const [displayRating, setDisplayRating] = useState(false);
+  const [displaySticker, setDisplaySticker] = useState(false);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [text, setText] = useState("");
 
   return (
-    <div className='App'>
+    <div className="App">
       <div
         style={{
-          width: '100%',
+          width: "100%",
           height: 700,
-          position: 'relative',
+          position: "relative",
         }}
       >
         <Stack
           sx={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            top: '16px',
-            width: '100%',
+            alignItems: "center",
+            justifyContent: "center",
+            position: "absolute",
+            top: "16px",
+            width: "100%",
           }}
         >
           <ButtonGroup
-            variant='contained'
-            aria-label='outlined primary button group'
-            size='small'
-            color='secondary'
+            variant="contained"
+            aria-label="outlined primary button group"
+            size="small"
+            color="secondary"
             sx={{
               zIndex: 300,
             }}
           >
             <Button
-              onClick={() => setMode('image')}
+              onClick={() => setMode("image")}
               sx={{
                 backgroundColor:
-                  mode === 'image' ? 'primary.main' : 'primary.light',
+                  mode === "image" ? "secondary.main" : "secondary.light",
               }}
             >
               Photo
             </Button>
             <Button
-              onClick={() => setMode('video')}
+              onClick={() => setMode("video")}
               sx={{
                 backgroundColor:
-                  mode === 'video' ? 'primary.main' : 'primary.light',
+                  mode === "video" ? "secondary.main" : "secondary.light",
               }}
             >
               Video
             </Button>
           </ButtonGroup>
-          <Stack direction='row' gap={2} m={2} sx={{ zIndex: 300 }}>
+          <Stack direction="row" gap={2} m={2} sx={{ zIndex: 300 }}>
             <IconButton
               disabled
-              sx={{ color: 'black', display: 'flex', flexDirection: 'column' }}
+              sx={{ color: "black", display: "flex", flexDirection: "column" }}
             >
-              <ImageIcon /> <Typography variant='caption'>Filters</Typography>
+              <ImageIcon /> <Typography variant="caption">Filters</Typography>
             </IconButton>
             <IconButton
               onClick={() => setDisplaySticker(!displaySticker)}
-              sx={{ color: 'black', display: 'flex', flexDirection: 'column' }}
+              sx={{ color: "black", display: "flex", flexDirection: "column" }}
             >
-              <ImageIcon /> <Typography variant='caption'>Stickers</Typography>
+              <ImageIcon /> <Typography variant="caption">Stickers</Typography>
             </IconButton>
             <IconButton
-              onClick={() => (text === '' ? setDialogOpen(true) : setText(''))}
-              sx={{ color: 'black', display: 'flex', flexDirection: 'column' }}
+              onClick={() => (text === "" ? setDialogOpen(true) : setText(""))}
+              sx={{ color: "black", display: "flex", flexDirection: "column" }}
             >
-              <ImageIcon /> <Typography variant='caption'>Text</Typography>
+              <ImageIcon /> <Typography variant="caption">Text</Typography>
             </IconButton>
             <IconButton
               onClick={() => setDisplayRating(!displayRating)}
-              sx={{ color: 'black', display: 'flex', flexDirection: 'column' }}
+              sx={{ color: "black", display: "flex", flexDirection: "column" }}
             >
-              <ImageIcon /> <Typography variant='caption'>Rating</Typography>
+              <ImageIcon /> <Typography variant="caption">Rating</Typography>
             </IconButton>
           </Stack>
           {displayRating && (
             <Rating
-              name='simple-controlled'
+              name="simple-controlled"
               sx={{ zIndex: 1000 }}
               value={value}
               onChange={(event, newValue) => {
-                setValue(newValue as number)
+                setValue(newValue as number);
               }}
             />
           )}
-          {text !== '' && (
+          {text !== "" && (
             <Typography
-              sx={{ zIndex: 231241, transform: 'rotate(-5deg)', marginTop: 2 }}
-              variant='h2'
-              color='white'
+              sx={{ zIndex: 231241, transform: "rotate(-5deg)", marginTop: 2 }}
+              variant="h2"
+              color="white"
             >
               {text}
             </Typography>
@@ -226,25 +227,25 @@ const VideoRecordPage = (props: { history: any[] }) => {
           {displaySticker && (
             <ThumbUpIcon
               sx={{
-                color: 'gold',
+                color: "gold",
                 fontSize: 96,
-                marginTop: '300px',
-                marginLeft: '200px',
+                marginTop: "300px",
+                marginLeft: "200px",
                 zIndex: 23123124,
-                transform: 'rotate(-15deg)',
+                transform: "rotate(-15deg)",
               }}
             />
           )}
         </Stack>
 
-        {mode === 'video' && <FromMediaRecorder />}
-        {mode === 'image' && <PhotoTaker />}
+        {mode === "video" && <FromMediaRecorder />}
+        {mode === "image" && <PhotoTaker />}
       </div>
       <Dialog open={isDialogOpen}>
         <TextField
           sx={{ padding: 2 }}
           onChange={(e) => {
-            setText(e.currentTarget.value)
+            setText(e.currentTarget.value);
           }}
         />
         <Button sx={{ padding: 2 }} onClick={() => setDialogOpen(false)}>
@@ -252,18 +253,18 @@ const VideoRecordPage = (props: { history: any[] }) => {
         </Button>
       </Dialog>
     </div>
-  )
-}
+  );
+};
 
 const VideoPreviewPage = (props: {
-  location: { state: { videoBlob: Blob | MediaSource } }
+  location: { state: { videoBlob: Blob | MediaSource } };
 }) => {
   return (
-    <div className='App'>
+    <div className="App">
       <h1>Video preview</h1>
 
       {props.location.state && props.location.state.videoBlob && (
-        <div style={{ width: '100%', maxWidth: 365, height: 700 }}>
+        <div style={{ width: "100%", maxWidth: 365, height: 700 }}>
           <video
             src={window.URL.createObjectURL(props.location.state.videoBlob)}
             width={365}
@@ -275,18 +276,18 @@ const VideoPreviewPage = (props: {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default function App() {
   return (
     <Router>
       <Switch>
-        <Redirect to='/videoRecord' exact path='/' />
-        <Route path='/videoRecord' component={VideoRecordPage} />
-        <Route path='/videoPreview' component={VideoPreviewPage} />
-        <Route path='/submitted' component={ThankYouPage} />
+        <Redirect to="/videoRecord" exact path="/" />
+        <Route path="/videoRecord" component={VideoRecordPage} />
+        <Route path="/videoPreview" component={VideoPreviewPage} />
+        <Route path="/submitted" component={ThankYouPage} />
       </Switch>
     </Router>
-  )
+  );
 }
