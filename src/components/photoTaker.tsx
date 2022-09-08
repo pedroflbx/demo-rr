@@ -3,9 +3,12 @@ import React, { useState } from 'react'
 import { Camera, FACING_MODES } from 'react-html5-camera-photo'
 import 'react-html5-camera-photo/build/css/index.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { useHistory } from 'react-router-dom'
 
 export default function PhotoTaker() {
   const [dataURI, setDataURI] = useState('')
+  const history = useHistory()
+
   return (
     <Box
       className='App'
@@ -29,7 +32,12 @@ export default function PhotoTaker() {
             <IconButton onClick={() => setDataURI('')}>
               <ArrowBackIcon sx={{ color: 'white' }} />
             </IconButton>
-            <Button variant='contained'>Submit</Button>
+            <Button
+              onClick={() => history.push('/submitted')}
+              variant='contained'
+            >
+              Submit
+            </Button>
             <div style={{ width: 40 }} />
           </Stack>
         </Box>
