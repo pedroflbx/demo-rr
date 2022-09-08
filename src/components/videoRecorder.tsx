@@ -1,32 +1,35 @@
-import { useEffect, useRef } from "react";
-import { ReactMediaRecorder } from "react-media-recorder";
+import { Box, IconButton } from '@mui/material'
+import { useEffect, useRef } from 'react'
+import { ReactMediaRecorder } from 'react-media-recorder'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
+} from 'react-router-dom'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
+import StopIcon from '@mui/icons-material/Stop'
 
 const VideoPreview = ({ stream }: any) => {
-  const videoRef = useRef<any>(null);
+  const videoRef = useRef<any>(null)
 
   useEffect(() => {
     if (videoRef.current && stream) {
-      videoRef.current.srcObject = stream;
+      videoRef.current.srcObject = stream
     }
-  }, [stream]);
+  }, [stream])
   if (!stream) {
-    return null;
+    return null
   }
-  return <video ref={videoRef} width={480} height={640} autoPlay />;
-};
+  return <video ref={videoRef} width={365} height={580} autoPlay />
+}
 
 const FromMediaRecorder = () => {
   return (
     <ReactMediaRecorder
       video={{
-        width: { exact: 480, ideal: 480 },
-        height: { exact: 640, ideal: 640 },
+        width: { exact: 365, ideal: 365 },
+        height: { exact: 580, ideal: 580 },
         aspectRatio: 0.75,
       }}
       render={({
@@ -39,61 +42,72 @@ const FromMediaRecorder = () => {
         return (
           <div
             style={{
-              border: "1px solid black",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "column",
+              border: '1px solid black',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              position: 'relative',
             }}
           >
-            <p>{status}</p>
-            <button onClick={startRecording}>Start Recording</button>
-            <button onClick={stopRecording}>Stop Recording</button>
-            {status !== "stopped" ? (
+            <Box sx={{ position: 'absolute', bottom: '64px', zIndex: 200 }}>
+              <p>{status}</p>
+              {status === 'idle' || status === 'stopped' ? (
+                <IconButton onClick={startRecording}>
+                  <FiberManualRecordIcon sx={{ color: 'red' }} />
+                </IconButton>
+              ) : (
+                <IconButton onClick={stopRecording}>
+                  <StopIcon sx={{ color: 'red' }} />
+                </IconButton>
+              )}
+            </Box>
+
+            {status !== 'stopped' ? (
               <VideoPreview stream={previewStream} />
             ) : (
               <video
                 src={mediaBlobUrl}
                 autoPlay
                 loop
-                width={480}
-                height={640}
-                style={{ border: "2px solid red" }}
+                width={365}
+                height={580}
+                style={{ border: '2px solid red' }}
                 controls
               />
             )}
           </div>
-        );
+        )
       }}
     />
-  );
-};
+  )
+}
 
 const VideoRecordPage = (props: { history: any[] }) => {
   return (
-    <div className="App">
+    <div className='App'>
       <h1>Video record</h1>
 
-      <div style={{ width: "100%", maxWidth: 480, height: 640 }}>
+      <div style={{ width: '100%', maxWidth: 365, height: 580 }}>
         <FromMediaRecorder />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const VideoPreviewPage = (props: {
-  location: { state: { videoBlob: Blob | MediaSource } };
+  location: { state: { videoBlob: Blob | MediaSource } }
 }) => {
   return (
-    <div className="App">
+    <div className='App'>
       <h1>Video preview</h1>
 
       {props.location.state && props.location.state.videoBlob && (
-        <div style={{ width: "100%", maxWidth: 480, height: 640 }}>
+        <div style={{ width: '100%', maxWidth: 365, height: 580 }}>
           <video
             src={window.URL.createObjectURL(props.location.state.videoBlob)}
-            width={480}
-            height={640}
+            width={365}
+            height={580}
             autoPlay
             loop
             controls
@@ -101,17 +115,17 @@ const VideoPreviewPage = (props: {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 export default function App() {
   return (
     <Router>
       <Switch>
-        <Redirect to="/videoRecord" exact path="/" />
-        <Route path="/videoRecord" component={VideoRecordPage} />
-        <Route path="/videoPreview" component={VideoPreviewPage} />
+        <Redirect to='/videoRecord' exact path='/' />
+        <Route path='/videoRecord' component={VideoRecordPage} />
+        <Route path='/videoPreview' component={VideoPreviewPage} />
       </Switch>
     </Router>
-  );
+  )
 }
