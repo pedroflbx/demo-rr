@@ -54,7 +54,6 @@ export default function PhotoTaker() {
           sizeFactor={1}
           onTakePhoto={(dataURI: React.SetStateAction<string>) => {
             setDataURI(dataURI)
-            console.log(dataURI)
           }}
         />
       )}

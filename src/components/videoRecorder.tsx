@@ -5,6 +5,7 @@ import {
   IconButton,
   Rating,
   Stack,
+  TextField,
   Typography,
 } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
@@ -22,6 +23,7 @@ import PhotoTaker from './photoTaker'
 import ImageIcon from '@mui/icons-material/Image'
 import ThankYouPage from './ThankYouPage'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import Dialog from '@mui/material/Dialog'
 
 const VideoPreview = ({ stream }: any) => {
   const videoRef = useRef<any>(null)
@@ -127,6 +129,8 @@ const VideoRecordPage = (props: { history: any[] }) => {
   const [value, setValue] = useState(2)
   const [displayRating, setDisplayRating] = useState(false)
   const [displaySticker, setDisplaySticker] = useState(false)
+  const [isDialogOpen, setDialogOpen] = useState(false)
+  const [text, setText] = useState('')
 
   return (
     <div className='App'>
@@ -188,7 +192,7 @@ const VideoRecordPage = (props: { history: any[] }) => {
               <ImageIcon /> <Typography variant='caption'>Stickers</Typography>
             </IconButton>
             <IconButton
-              disabled
+              onClick={() => (text === '' ? setDialogOpen(true) : setText(''))}
               sx={{ color: 'black', display: 'flex', flexDirection: 'column' }}
             >
               <ImageIcon /> <Typography variant='caption'>Text</Typography>
@@ -210,12 +214,21 @@ const VideoRecordPage = (props: { history: any[] }) => {
               }}
             />
           )}
+          {text !== '' && (
+            <Typography
+              sx={{ zIndex: 231241, transform: 'rotate(-5deg)', marginTop: 2 }}
+              variant='h2'
+              color='white'
+            >
+              {text}
+            </Typography>
+          )}
           {displaySticker && (
             <ThumbUpIcon
               sx={{
                 color: 'gold',
                 fontSize: 96,
-                marginTop: '350px',
+                marginTop: '300px',
                 marginLeft: '200px',
                 zIndex: 23123124,
                 transform: 'rotate(-15deg)',
@@ -227,6 +240,17 @@ const VideoRecordPage = (props: { history: any[] }) => {
         {mode === 'video' && <FromMediaRecorder />}
         {mode === 'image' && <PhotoTaker />}
       </div>
+      <Dialog open={isDialogOpen}>
+        <TextField
+          sx={{ padding: 2 }}
+          onChange={(e) => {
+            setText(e.currentTarget.value)
+          }}
+        />
+        <Button sx={{ padding: 2 }} onClick={() => setDialogOpen(false)}>
+          Submit
+        </Button>
+      </Dialog>
     </div>
   )
 }
