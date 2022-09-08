@@ -3,6 +3,7 @@ import {
   Button,
   ButtonGroup,
   IconButton,
+  Rating,
   Stack,
   Typography,
 } from "@mui/material";
@@ -106,6 +107,8 @@ type Mode = "video" | "image";
 
 const VideoRecordPage = (props: { history: any[] }) => {
   const [mode, setMode] = useState<Mode>("video");
+  const [value, setValue] = useState(2);
+  const [displayRating, setDisplayRating] = useState(false);
 
   return (
     <div className="App">
@@ -173,12 +176,24 @@ const VideoRecordPage = (props: { history: any[] }) => {
               <ImageIcon /> <Typography variant="caption">Text</Typography>
             </IconButton>
             <IconButton
+              onClick={() => setDisplayRating(!displayRating)}
               sx={{ color: "black", display: "flex", flexDirection: "column" }}
             >
               <ImageIcon /> <Typography variant="caption">Rating</Typography>
             </IconButton>
           </Stack>
+          {displayRating && (
+            <Rating
+              name="simple-controlled"
+              sx={{ zIndex: 1000 }}
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue as number);
+              }}
+            />
+          )}
         </Stack>
+
         {mode === "video" && <FromMediaRecorder />}
         {mode === "image" && <PhotoTaker />}
       </div>
