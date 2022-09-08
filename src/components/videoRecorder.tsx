@@ -125,19 +125,19 @@ const VideoRecordPage = (props: { history: any[] }) => {
             }}
           >
             <Button
-              onClick={() => setMode("video")}
+              onClick={() => setMode("image")}
               sx={{
                 backgroundColor:
-                  mode === "video" ? "primary.main" : "primary.light",
+                  mode === "image" ? "primary.main" : "primary.light",
               }}
             >
               Photo
             </Button>
             <Button
-              onClick={() => setMode("image")}
+              onClick={() => setMode("video")}
               sx={{
                 backgroundColor:
-                  mode === "image" ? "primary.main" : "primary.light",
+                  mode === "video" ? "primary.main" : "primary.light",
               }}
             >
               Video
