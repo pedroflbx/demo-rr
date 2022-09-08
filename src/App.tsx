@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Stack } from "@mui/system";
+import VideoRecorderFlowBox from "./components/videoRecorder";
 
 const App = () => {
   return (
@@ -21,7 +22,9 @@ const App = () => {
           pb: 8,
         }}
       >
-        <Box height="100%" border="1px solid grey"></Box>
+        <Box height="100%" border="1px solid grey">
+          <VideoRecorderFlowBox />
+        </Box>
       </Box>
     </Stack>
   );
