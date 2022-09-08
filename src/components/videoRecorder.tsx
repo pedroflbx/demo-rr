@@ -14,11 +14,13 @@ import {
   Switch,
   Route,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import StopIcon from "@mui/icons-material/Stop";
 import PhotoTaker from "./photoTaker";
 import ImageIcon from "@mui/icons-material/Image";
+import ThankYouPage from "./ThankYouPage";
 
 const VideoPreview = ({ stream }: any) => {
   const videoRef = useRef<any>(null);
@@ -35,6 +37,7 @@ const VideoPreview = ({ stream }: any) => {
 };
 
 const FromMediaRecorder = () => {
+  const history = useHistory();
   return (
     <ReactMediaRecorder
       video={{
@@ -95,6 +98,19 @@ const FromMediaRecorder = () => {
                 height={700}
                 controls
               />
+            )}
+            {status === "stopped" && (
+              <Button
+                variant="contained"
+                sx={{
+                  zIndex: 100000,
+                  position: "absolute",
+                  bottom: 32,
+                }}
+                onClick={() => history.push("/submitted")}
+              >
+                Submit
+              </Button>
             )}
           </div>
         );
@@ -231,6 +247,7 @@ export default function App() {
         <Redirect to="/videoRecord" exact path="/" />
         <Route path="/videoRecord" component={VideoRecordPage} />
         <Route path="/videoPreview" component={VideoPreviewPage} />
+        <Route path="/submitted" component={ThankYouPage} />
       </Switch>
     </Router>
   );
