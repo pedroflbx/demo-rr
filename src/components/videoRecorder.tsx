@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import StopIcon from "@mui/icons-material/Stop";
+import PhotoTaker from "./photoTaker";
 
 const VideoPreview = ({ stream }: any) => {
   const videoRef = useRef<any>(null);
@@ -145,7 +146,7 @@ const VideoRecordPage = (props: { history: any[] }) => {
           </ButtonGroup>
         </Stack>
         {mode === "video" && <FromMediaRecorder />}
-        {mode === "image" && <Box>I will render photo</Box>}
+        {mode === "image" && <PhotoTaker />}
       </div>
     </div>
   );
